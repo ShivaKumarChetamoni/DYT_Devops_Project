@@ -1,4 +1,4 @@
-name: Build and push Docker image (Docker Hub)
+name: Build and Push Docker Image (Docker Hub)
 
 on:
   push:
@@ -17,7 +17,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -27,13 +26,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      -
-
       - name: Build and push image
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: ./Dockerfile           # change if Dockerfile is elsewhere
+          context: ./backend
+          file: ./backend/Dockerfile
           push: true
-          platforms: linux/amd64,linux/arm64
-          
+          tags: |
+            shivakumarchetamoni/dyt-devops-backend:latest
